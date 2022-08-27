@@ -194,7 +194,7 @@ class EDTWriter {
                 dest[index++] = (byte) bytes.length;
             }
 
-            System.arraycopy(bytes, 0, dest, index+4, bytes.length);
+            System.arraycopy(bytes, 0, dest, index, bytes.length);
             index += bytes.length;
         }
     }
