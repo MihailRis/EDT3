@@ -37,14 +37,14 @@ class EDTWriter {
         EDTType type;
         boolean longtype = false;
         if (item instanceof EDTGroup){
-            if (item.size() > 65535){
+            if (item.size() > 255){
                 type = EDTType.BIGGROUP;
                 longtype = true;
             } else {
                 type = EDTType.GROUP;
             }
         } else {
-            if (item.size() > 65535){
+            if (item.size() > 255){
                 type = EDTType.LONGLIST;
                 longtype = true;
             } else {
