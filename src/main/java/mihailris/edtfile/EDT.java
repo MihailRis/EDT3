@@ -25,8 +25,12 @@ public class EDT {
         return writer.write(root);
     }
 
-    public static EDTItem read(byte[] source) throws IOException {
-        return read(source, 0, source.length);
+    public static EDTGroup read(byte[] source) throws IOException {
+        return (EDTGroup) read(source, 0, source.length);
+    }
+
+    public static EDTList readList(byte[] source) throws IOException {
+        return (EDTList) read(source, 0, source.length);
     }
 
     public static EDTItem read(byte[] source, int sourceOffset) throws IOException {
