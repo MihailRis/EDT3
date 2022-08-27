@@ -5,7 +5,18 @@ EDT is a tags-based binary data notation format supporting compression.
 The format was developed for use as part of MIO-engine and zendes2,5 (game).
 Designed to be simple, universal and fast.
 
-**EDT base principes:**
+## Table of contents
+- [EDT base principles](#edt-base-principles)
+- [Format properties](#format-properties)
+- [Version 2](#version-2)
+- [Supported types](#supported-types)
+- [Examples](#examples)
+- [Format description](#format-description)
+  - [Item common payload](#1-item-common-payload)
+  - [Items individual payload](#2-items-individual-payload)
+  - [Compression](#3-compression)
+
+## EDT base principles
 - has no header and does not need any context to read
 - root is always a group or list
 - every subnode if it is group or list may be extracted from bytes the simplest way
@@ -13,20 +24,21 @@ Designed to be simple, universal and fast.
 - compression is highly recommended for files
 - GZIP used for compression (EDT.write uses compression by default, use EDT.write(item, false) to write uncompressed)
 
-# Format Properties:
+## Format Properties
 - byteorder: big-endian
 - compression: gzip
 - integers: signed
 - booleans: 1 byte
 - encoding: utf-8
 
-# Version 2
+## Version 2
 Version 2 is deprecated since version 3.
 There is EDT.readEDT2(...) to read old files (for convertation to EDT3).
 
 There is no EDT.writeEDT2(...) in the project.
 
-# The API works with following types:
+## Supported types
+### The API works with following types:
 - int (byte, char, short, int)
 - long (long)
 - float (float)
@@ -35,7 +47,7 @@ There is no EDT.writeEDT2(...) in the project.
 - string (String)
 - bytes (byte[])
 
-# Examples:
+## Examples:
 ```java
 // example of tree creation
 EDTGroup root = EDTGroup.create("root");
@@ -197,9 +209,9 @@ root:
 ```
 </details>
 
-# Format Description:
+## Format description:
 Every tree node is called an Item.
-**1. Item (tree node) common payload:**
+### 1. Item common payload:
 ```
 int8 type; [0-14]
 int8 tagLength; [0-255]
@@ -207,7 +219,7 @@ byte[tagLength] utf8encodedTag;
 ```
 when item tag is null common part is 2 bytes long.
 
-**2. Items individual payload (in addition to common payload)**
+### 2. Items individual payload
 
 null - used for lists
 ```
@@ -272,7 +284,7 @@ int16 length;
 item[length] items;
 ```
 
-**3. Compression**
+### 3. Compression
 
 EDT uses GZIP for compression.
 If EDT data bytes begin with value 255, it means data is compressed.
