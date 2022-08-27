@@ -102,6 +102,9 @@ class EDTWriter {
             dest[index++] = 0;
         } else {
             byte[] tagBytes = tag.getBytes();
+            if (index + 4 + tagBytes.length >= dest.length){
+                grow(index, 4 + tagBytes.length);
+            }
             dest[index++] = (byte) tagBytes.length;
             System.arraycopy(tagBytes, 0, dest, index, tagBytes.length);
             index += tagBytes.length;
@@ -183,7 +186,7 @@ class EDTWriter {
             byte[] bytes = (byte[]) object;
             // grow array if needed
             if (index + bytes.length + 4 >= dest.length){
-                grow(index, index + bytes.length * 2);
+                grow(index, index + bytes.length * 2 + 4);
             }
             if (bytes.length > 255) {
                 writeHead(EDTType.LONGBYTES, tag);
