@@ -69,6 +69,11 @@ public class EDTGroup implements EDTItem {
         return this;
     }
 
+    public EDTGroup put(String tag, EDTWriteable writeable){
+        writeable.write(child(tag));
+        return this;
+    }
+
     public boolean has(String tag){
         return objects.containsKey(tag);
     }

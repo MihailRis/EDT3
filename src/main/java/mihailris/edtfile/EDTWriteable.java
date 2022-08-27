@@ -1,5 +1,5 @@
 package mihailris.edtfile;
 
-public interface EDTSerializable {
+public interface EDTWriteable {
     void write(EDTGroup root);
 }

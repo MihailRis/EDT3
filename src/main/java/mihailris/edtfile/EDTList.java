@@ -101,6 +101,16 @@ public class EDTList implements EDTItem {
         return this;
     }
 
+    public EDTList add(EDTWriteable writeable){
+        writeable.write(child(null));
+        return this;
+    }
+
+    public EDTList add(String tag, EDTWriteable writeable){
+        writeable.write(child(tag));
+        return this;
+    }
+
     private void putObject(Object value) {
         objects.add(value);
     }
