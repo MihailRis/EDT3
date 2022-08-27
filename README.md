@@ -1,4 +1,4 @@
-# EDT3 - Independent Data Tree (version 3)
+# EDT3 - Context-Independent Data Tree (version 3)
 ('E' - ex. extendable)
 
 EDT is a tags-based binary data notation format supporting compression.
@@ -11,6 +11,8 @@ Designed to be simple, universal and fast.
 - [Version 2](#version-2)
 - [Supported types](#supported-types)
 - [Examples](#examples)
+  - [Convert to JSON](#convert-to-json)
+  - [Convert to YAML](#convert-to-yaml)
 - [Format description](#format-description)
   - [Item common payload](#1-item-common-payload)
   - [Items individual payload](#2-items-individual-payload)
@@ -121,7 +123,7 @@ list.add(54235L).add(true).add(new byte[150]);
 ```
 Length of EDT.write(root) in 376 bytes (uncompressed) or 238 bytes (compressed)
 
-**Convert to JSON:**
+### Convert to JSON
 ```java
 System.out.println(EDTConvert.toJson(root));
 ```
@@ -169,7 +171,7 @@ System.out.println(EDTConvert.toJson(root));
 ```
 </details>
 
-**Convert to YAML:**
+### Convert to YAML
 ```java
 System.out.println(EDTConvert.toYaml(root));
 ```
