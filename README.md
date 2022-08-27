@@ -1,4 +1,4 @@
-# EDT3 - Independent Data Tree (version 3)
+# EDT3 - Context-Independent Data Tree (version 3)
 ('E' - ex. extendable)
 
 EDT is a tags-based binary data notation format supporting compression.
