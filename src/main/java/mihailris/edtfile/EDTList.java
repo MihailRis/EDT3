@@ -43,8 +43,20 @@ public class EDTList implements EDTItem {
         return group;
     }
 
+    public EDTGroup child(String tag){
+        EDTGroup group = new EDTGroup(tag);
+        add(group);
+        return group;
+    }
+
     public EDTList childList(){
         EDTList list = new EDTList(null);
+        add(list);
+        return list;
+    }
+
+    public EDTList childList(String tag){
+        EDTList list = new EDTList(tag);
         add(list);
         return list;
     }
@@ -133,5 +145,11 @@ public class EDTList implements EDTItem {
         return objects;
     }
 
+    public static EDTList create(String tag){
+        return new EDTList(tag);
+    }
 
+    public static EDTList create(){
+        return new EDTList(null);
+    }
 }
