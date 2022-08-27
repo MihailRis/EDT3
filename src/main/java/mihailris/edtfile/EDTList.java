@@ -61,6 +61,11 @@ public class EDTList implements EDTItem {
         return list;
     }
 
+    public EDTList addNull(){
+        putObject(null);
+        return this;
+    }
+
     public EDTList add(EDTItem value){
         putObject(value);
         return this;

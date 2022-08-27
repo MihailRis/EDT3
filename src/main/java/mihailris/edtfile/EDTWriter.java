@@ -112,6 +112,10 @@ class EDTWriter {
         if (index + 3 + 16 >= dest.length){
             grow(index, 3 + 16);
         }
+        if (object == null) {
+            writeHead(EDTType.NULL, tag);
+        }
+
         if (object instanceof Long || object instanceof Integer) {
             long value;
             if (object instanceof Integer)
