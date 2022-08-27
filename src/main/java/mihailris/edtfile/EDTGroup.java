@@ -87,6 +87,48 @@ public class EDTGroup implements EDTItem {
         return (EDTList) value;
     }
 
+    public String getString(String tag, String def) {
+        Object value = objects.get(tag);
+        if (value == null)
+            return def;
+        return (String) value;
+    }
+
+    public boolean getBool(String tag, boolean def){
+        Boolean value = (Boolean) objects.get(tag);
+        if (value == null)
+            return def;
+        return value;
+    }
+
+    public int getInt(String tag, int def){
+        Number value = (Number) objects.get(tag);
+        if (value == null)
+            return def;
+        return value.intValue();
+    }
+
+    public long getLong(String tag, long def){
+        Number value = (Number) objects.get(tag);
+        if (value == null)
+            return def;
+        return value.longValue();
+    }
+
+    public float getFloat(String tag, float def){
+        Number value = (Number) objects.get(tag);
+        if (value == null)
+            return def;
+        return value.floatValue();
+    }
+
+    public double getDouble(String tag, double def){
+        Number value = (Number) objects.get(tag);
+        if (value == null)
+            return def;
+        return value.doubleValue();
+    }
+
     public String getString(String tag) {
         Object value = objects.get(tag);
         if (value == null)

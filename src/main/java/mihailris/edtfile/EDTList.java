@@ -93,12 +93,12 @@ public class EDTList implements EDTItem {
         objects.add(value);
     }
 
-    public boolean getBool(int index){
-        return (boolean) objects.get(index);
-    }
-
     public EDTGroup get(int index) {
         return (EDTGroup) objects.get(index);
+    }
+
+    public boolean getBool(int index){
+        return (boolean) objects.get(index);
     }
 
     public EDTList getList(int index) {
