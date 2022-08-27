@@ -146,6 +146,20 @@ public class EDTGroup implements EDTItem {
         return (String) value;
     }
 
+    public byte[] getBytes(String tag) {
+        Object value = objects.get(tag);
+        if (value == null)
+            return null;
+        return (byte[]) value;
+    }
+
+    public byte[] getBytes(String tag, byte[] def) {
+        Object value = objects.get(tag);
+        if (value == null)
+            return def;
+        return (byte[]) value;
+    }
+
     public boolean getBool(String tag){
         return (boolean) objects.get(tag);
     }
