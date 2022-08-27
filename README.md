@@ -12,20 +12,21 @@ Designed to be simple, universal and fast.
 - string tags used to make reading implementation-independent and full
 - compression is highly recommended for files
 - GZIP used for compression (EDT.write uses compression by default, use EDT.write(item, false) to write uncompressed)
-##Format Properties:
+
+# Format Properties:
 - byteorder: big-endian
 - compression: gzip
 - integers: signed
 - booleans: 1 byte
 - encoding: utf-8
 
-##Version 2
+# Version 2
 Version 2 is deprecated since version 3.
 There is EDT.readEDT2(...) to read old files (for convertation to EDT3).
 
 There is no EDT.writeEDT2(...) in the project.
 
-##The API works with following types:
+# The API works with following types:
 - int (byte, char, short, int)
 - long (long)
 - float (float)
@@ -33,8 +34,8 @@ There is no EDT.writeEDT2(...) in the project.
 - bool (boolean)
 - string (String)
 - bytes (byte[])
----
-##Examples:
+
+# Examples:
 ```java
 // example of tree creation
 EDTGroup root = EDTGroup.create("root");
@@ -196,10 +197,9 @@ root:
 ```
 </details>
 
----
-##Format Description:
+# Format Description:
 Every tree node is called an Item.
-###1. Item (tree node) common payload:
+**1. Item (tree node) common payload:**
 ```
 int8 type; [0-14]
 int8 tagLength; [0-255]
@@ -207,7 +207,7 @@ byte[tagLength] utf8encodedTag;
 ```
 when item tag is null common part is 2 bytes long.
 
-###2. Items individual payload (in addition to common payload)
+**2. Items individual payload (in addition to common payload)**
 
 null - used for lists
 ```
@@ -272,7 +272,8 @@ int16 length;
 item[length] items;
 ```
 
-###3. Compression
+**3. Compression**
+
 EDT uses GZIP for compression.
 If EDT data bytes begin with value 255, it means data is compressed.
 Compressed data is not a part of EDT and has next header over GZIP header, to make it easily read:
