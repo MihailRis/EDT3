@@ -87,6 +87,16 @@ public class EDTGroup implements EDTItem {
         return (EDTList) value;
     }
 
+    /**
+     * @return "name" item if contains, else tag
+     */
+    public String getName(){
+        String name = getString("name");
+        if (name == null)
+            return tag;
+        return name;
+    }
+
     public String getString(String tag, String def) {
         Object value = objects.get(tag);
         if (value == null)
