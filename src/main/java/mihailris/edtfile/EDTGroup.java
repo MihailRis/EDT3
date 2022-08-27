@@ -7,7 +7,7 @@ public class EDTGroup implements EDTItem {
     private final Map<String, Object> objects;
     private final String tag;
 
-    public EDTGroup(String tag) {
+    EDTGroup(String tag) {
         this.tag = tag;
         this.objects = new HashMap<>();
     }

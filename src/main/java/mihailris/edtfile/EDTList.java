@@ -7,7 +7,7 @@ public class EDTList implements EDTItem {
     private final String tag;
     private final List<Object> objects;
 
-    public EDTList(String tag) {
+    EDTList(String tag) {
         this.tag = tag;
         this.objects = new ArrayList<>();
     }
