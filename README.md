@@ -10,9 +10,10 @@ Designed to be simple, universal and fast.
 - [Format properties](#format-properties)
 - [Version 2](#version-2)
 - [Supported types](#supported-types)
-- [Examples](#examples)
+- [Usage](#usage)
   - [Convert to JSON](#convert-to-json)
   - [Convert to YAML](#convert-to-yaml)
+- [Examples](#examples)
 - [Format description](#format-description)
   - [Item common payload](#1-item-common-payload)
   - [Items individual payload](#2-items-individual-payload)
@@ -48,80 +49,109 @@ There is no EDT.writeEDT2(...) in the project.
 - bool (boolean)
 - string (String)
 - bytes (byte[])
+### And tree node types:
+- list (EDTList - list)
+- group (EDTGroup - map)
 
-## Examples:
+## Usage:
+Create new group:
 ```java
-// example of tree creation
-EDTGroup root = EDTGroup.create("root");
-root.put("name", "TestWorld")
-    .put("id", 5102)
-    .put("time", System.currentTimeMillis()/1000.0)
-    .childList("players")
-    .add("Player1")
-    .add("world_inspector");
-
-// write to bytes with compression
-byte[] bytes = EDT.write(root);
-
-// read EDT from bytes
-EDTItem read = EDT.read(bytes);
-// cast to group
-EDTGroup readGroup = (EDTGroup)read;
-// print data tree
-System.out.println(EDTConvert.toString(read));
+EDTGroup group = EDTGroup.create("tag_name");
+// or subgroup
+EDTGroup subgroup = group.child("subgroup_tag_name");
+// or
+EDTGroup subgroup = list.child();
 ```
 
-<details>
-<summary>Context independency demonstration</summary>
-
-(Don't do it this way, it's just demonstration of the format properties) 
+Create new list:
 ```java
-EDTGroup root = EDTGroup.create("root");
-root.child("subnode").put("test", 42);
+EDTList list = EDTList.create("tag_name");
+// or sublist
+EDTList sublist = list.childList();
+// or
+EDTList sublist = group.childList("subgroup_tag_name");
+```
 
-int offset = 2 + // 'root' header bytes
-4 + // 'root' tag
-1; // 'root' group size byte
-// write without compression
-byte[] rootBytes = EDT.write(root, false);
-EDTGroup subnode = (EDTGroup)EDT.read(rootBytes, offset);
-System.out.println(EDTConvert.toString(subnode));
+Read group from bytes:
+```java
+byte[] bytes = ...;
+EDTGroup group = EDT.read(bytes);
 ```
-Console Output:
+
+Read list from bytes:
+```java
+byte[] bytes = ...;
+EDTList list = EDT.readList(bytes);
 ```
-subnode: {
-  test: 42
+
+Convert EDTItem (EDTGroup or EDTList) to bytes:
+```java
+byte[] bytes = EDT.write(item); // with compression
+// or
+byte[] bytes = EDT.write(item, false); // without compression
+```
+
+Put values to EDTGroup:
+```java
+group.put("a", 53123)
+     .put("b", 0.1f)
+     .put("c", true)
+     .put("d", bytes)
+     .put("e", "text");
+```
+
+Add values to EDTList:
+```java
+list.add(53123)
+    .add(0.1f)
+    .add(true)
+    .add(bytes)
+    .add("text");
+```
+
+Getting values:
+```java
+int a = group.getInt("a");
+float b = group.getFloat("b");
+// default value available on all getX methods
+boolean c = group.getBool("c", false);
+```
+
+Get subgroup/sublist:
+```java
+EDTGroup subgroup = group.get("subgroup_tag_name");
+EDTList sublist = group.getList("sublist_tag_name");
+// or
+EDTGroup subgroup = list.get(0);
+EDTList sublist = list.getList(1);
+```
+
+Add null to EDTList:
+```java
+list.addNull();
+```
+
+Also the library contains next interfaces:
+```java
+public interface EDTReadable {
+    void read(EDTGroup root);
 }
 ```
-</details>
-
-EDTConvert class allows to write string representation of tree.
-Also to write YAML or JSON.
-
-This `root` creation code will be used in all examples below.
 ```java
-EDTGroup root = EDTGroup.create("root");
+public interface EDTWriteable {
+    void write(EDTGroup root);
+    
+    default EDTGroup asEDT(String tag){
+        ...
+    }
 
-EDTGroup external = EDTGroup.create("external");
-root.put(external).put("rand", new Random().nextFloat());
-
-root.child("internal").put("number", -3310)
-.childList("random-numbers")
-.add(4.2f).add(7).add(0.01d).add(-5L).add(111111L).add("1/3").add(9).add(6);
-
-root.get("internal").getList("random-numbers").childList().child()
-.put("some-data", new byte[10])
-.put("heh", 0L);
-long tm = System.currentTimeMillis();
-root.put("time", tm / 1000.0)
-.put("ftime", tm / 1000.0f)
-.put("working", true)
-.put("hex", Long.toHexString(System.nanoTime()))
-.put("nanos", System.nanoTime());
-EDTList list = root.get("internal").getList("random-numbers");
-list.add(54235L).add(true).add(new byte[150]);
+    default byte[] asEDTBytes(String tag, boolean compression){
+        ...
+    }
+}
 ```
-Length of EDT.write(root) in 376 bytes (uncompressed) or 238 bytes (compressed)
+
+And `EDTSerializable` that just combines interfaces above.
 
 ### Convert to JSON
 ```java
@@ -210,6 +240,80 @@ root:
   time: 1.661599603548E9
 ```
 </details>
+
+## Examples:
+```java
+// example of tree creation
+EDTGroup root = EDTGroup.create("root");
+root.put("name", "TestWorld")
+    .put("id", 5102)
+    .put("time", System.currentTimeMillis()/1000.0)
+    .childList("players")
+    .add("Player1")
+    .add("world_inspector");
+
+// write to bytes with compression
+byte[] bytes = EDT.write(root);
+
+// read EDT from bytes
+EDTItem read = EDT.read(bytes);
+// cast to group
+EDTGroup readGroup = (EDTGroup)read;
+// print data tree
+System.out.println(EDTConvert.toString(read));
+```
+
+<details>
+<summary>Context independency demonstration</summary>
+
+(Don't do it this way, it's just demonstration of the format properties) 
+```java
+EDTGroup root = EDTGroup.create("root");
+root.child("subnode").put("test", 42);
+
+int offset = 2 + // 'root' header bytes
+4 + // 'root' tag
+1; // 'root' group size byte
+// write without compression
+byte[] rootBytes = EDT.write(root, false);
+EDTGroup subnode = (EDTGroup)EDT.read(rootBytes, offset);
+System.out.println(EDTConvert.toString(subnode));
+```
+Console Output:
+```
+subnode: {
+  test: 42
+}
+```
+</details>
+
+EDTConvert class allows to write string representation of tree.
+Also to write YAML or JSON.
+
+This `root` creation code will be used in all examples below.
+```java
+EDTGroup root = EDTGroup.create("root");
+
+EDTGroup external = EDTGroup.create("external");
+root.put(external).put("rand", new Random().nextFloat());
+
+root.child("internal").put("number", -3310)
+.childList("random-numbers")
+.add(4.2f).add(7).add(0.01d).add(-5L).add(111111L).add("1/3").add(9).add(6);
+
+root.get("internal").getList("random-numbers").childList().child()
+.put("some-data", new byte[10])
+.put("heh", 0L);
+long tm = System.currentTimeMillis();
+root.put("time", tm / 1000.0)
+.put("ftime", tm / 1000.0f)
+.put("working", true)
+.put("hex", Long.toHexString(System.nanoTime()))
+.put("nanos", System.nanoTime());
+EDTList list = root.get("internal").getList("random-numbers");
+list.add(54235L).add(true).add(new byte[150]);
+```
+Length of EDT.write(root) in 376 bytes (uncompressed) or 238 bytes (compressed)
 
 ## Format description:
 Every tree node is called an Item.
