@@ -42,7 +42,7 @@ class EDTReader {
     static EDTList readList(ByteBuffer buffer, String tag, boolean longtype) throws IOException {
         int size;
         if (longtype){
-            size = buffer.getShort() & 0xFFFF;
+            size = buffer.getInt();
         } else {
             size = buffer.get() & 0xFF;
         }
@@ -111,7 +111,7 @@ class EDTReader {
     static EDTGroup readGroup(ByteBuffer buffer, String tag, boolean longtype) throws IOException {
         int size;
         if (longtype){
-            size = buffer.getShort() & 0xFFFF;
+            size = buffer.getInt();
         } else {
             size = buffer.get() & 0xFF;
         }

@@ -60,8 +60,8 @@ class EDTWriter {
             EDTGroup group = (EDTGroup) item;
             int size = group.size();
             if (longtype){
-                EDTDataUtil.short2Bytes(size, dest, index);
-                index += 2;
+                EDTDataUtil.int2Bytes(size, dest, index);
+                index += 4;
             } else {
                 dest[index++] = (byte) size;
             }
@@ -80,8 +80,8 @@ class EDTWriter {
             int size = list.size();
             final List<Object> objects = list.getObjects();
             if (longtype){
-                EDTDataUtil.short2Bytes(size, dest, index);
-                index += 2;
+                EDTDataUtil.int2Bytes(size, dest, index);
+                index += 4;
             } else {
                 dest[index++] = (byte) size;
             }
