@@ -8,6 +8,7 @@ Designed to be simple, universal and fast.
 ## Table of contents
 - [EDT base principles](#edt-base-principles)
 - [Format properties](#format-properties)
+- [Limitations](#limitations)
 - [Version 2](#version-2)
 - [Supported types](#supported-types)
 - [Usage](#usage)
@@ -36,6 +37,9 @@ Designed to be simple, universal and fast.
 - integers: signed
 - booleans: 1 byte
 - encoding: utf-8
+
+## Limitations
+- max tag length: 255 bytes
 
 ## Version 2
 Version 2 is deprecated since version 3.
