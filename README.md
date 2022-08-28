@@ -39,7 +39,7 @@ Designed to be simple, universal and fast.
 - encoding: utf-8
 
 ## Limitations
-- max tag length: 255 bytes
+- max tag length: 255 bytes (intentional limitation)
 
 ## Version 2
 Version 2 is deprecated since version 3.
