@@ -27,7 +27,7 @@ Designed to be simple, universal and fast.
 - only types are tree nodes: group and list
 - any tree node may be root (but group is more preferred as root)
 - string tags used to make reading implementation-independent and full
-- serialized tree node is still context independed for reading (unless it's compressed tree)
+- serialized tree node is still context independed for reading (unless it's in compressed tree bytes)
 - compression is highly recommended for files
 
 ## Format Properties
