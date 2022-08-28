@@ -24,7 +24,7 @@ Designed to be simple, universal and fast.
 ## EDT base principles
 - has no header and does not need any context to read
 - only types are tree nodes: group and list
-- any tree node may be root
+- any tree node may be root (but group is more preferred as root)
 - every subnode if it is group or list may be extracted from bytes the simplest way
 - string tags used to make reading implementation-independent and full
 - compression is highly recommended for files
