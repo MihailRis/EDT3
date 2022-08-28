@@ -2,7 +2,7 @@
 ('E' - ex. extendable)
 
 EDT is a tags-based binary data notation format supporting compression.
-The format was developed for use as part of MIO-engine and zendes2,5 (game).
+The format was developed for use as part of MIO-engine and [Zendes2,5 (game)](https://mihailris.itch.io/zendes25).
 Designed to be simple, universal and fast.
 
 ## Table of contents
