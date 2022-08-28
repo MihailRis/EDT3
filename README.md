@@ -26,10 +26,9 @@ Designed to be simple, universal and fast.
 - has no header and does not need any context to read
 - only types are tree nodes: group and list
 - any tree node may be root (but group is more preferred as root)
-- every subnode if it is group or list may be extracted from bytes the simplest way
 - string tags used to make reading implementation-independent and full
+- serialized tree node is still context independed for reading (unless it's compressed tree)
 - compression is highly recommended for files
-- GZIP used for compression (EDT.write uses compression by default, use EDT.write(item, false) to write uncompressed)
 
 ## Format Properties
 - byteorder: big-endian
