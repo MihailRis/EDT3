@@ -14,6 +14,8 @@ Designed to be simple, universal and fast.
   - [Convert to JSON](#convert-to-json)
   - [Convert to YAML](#convert-to-yaml)
 - [Examples](#examples)
+  - [Example 1](#example-1)
+  - [Example 2](#example-2)
 - [Format description](#format-description)
   - [Item common payload](#1-item-common-payload)
   - [Items individual payload](#2-items-individual-payload)
@@ -153,6 +155,10 @@ public interface EDTWriteable {
 
 And `EDTSerializable` that just combines interfaces above.
 
+EDTConvert class allows to write string representation of tree.
+Also to write YAML or JSON.
+In next usage examples used 'root' generated in [Example 2](#example-2).
+
 ### Convert to JSON
 ```java
 System.out.println(EDTConvert.toJson(root));
@@ -242,6 +248,7 @@ root:
 </details>
 
 ## Examples:
+### Example 1
 ```java
 // example of tree creation
 EDTGroup root = EDTGroup.create("root");
@@ -287,10 +294,8 @@ subnode: {
 ```
 </details>
 
-EDTConvert class allows to write string representation of tree.
-Also to write YAML or JSON.
-
-This `root` creation code will be used in all examples below.
+### Example 2
+This `root` creation code used in EDTConvert usage examples.
 ```java
 EDTGroup root = EDTGroup.create("root");
 
