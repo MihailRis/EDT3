@@ -398,5 +398,10 @@ item[length] items;
 ### 3. Compression
 
 EDT uses GZIP for compression.
-If EDT data bytes begin with value 255, it means data is compressed.
-Compressed data is not a part of EDT and has next header over GZIP header, to make it easily read:
+If EDT data bytes begin with value 255 (-1 signed byte), it means data is compressed.
+Compressed data is not a part of EDT and has next structure, to make it easily read:
+```java
+int8 compressionFlag; // (always -1 signed byte value)
+int32 uncompressedLength;
+byte[] compressedData; // GZIP data
+```
