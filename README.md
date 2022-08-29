@@ -159,7 +159,7 @@ public interface EDTWriteable {
 
 And `EDTSerializable` that just combines interfaces above.
 
-Also you can put any EDT tree to another as bytes to store compressed sub-trees in memory:
+Also you can put any EDT tree into another as bytes to store compressed sub-trees in memory:
 ```java
 EDTGroup internalRoot = ...;
 EDTGroup externalRoot = ...;
