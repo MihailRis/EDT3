@@ -159,6 +159,20 @@ public interface EDTWriteable {
 
 And `EDTSerializable` that just combines interfaces above.
 
+Also you can put any EDT tree to another as bytes to store compressed sub-trees in memory:
+```java
+EDTGroup internalRoot = ...;
+EDTGroup externalRoot = ...;
+
+byte[] internalBytes = EDT.write(internalRoot);
+externalRoot.put("internal", internalBytes);
+```
+And easily read it:
+```java
+EDTGroup internalRoot = EDT.read(externalRoot.getBytes("internal"))
+```
+It may be also used to prevent tree from reading all sub-trees at once.
+
 EDTConvert class allows to write string representation of tree.
 Also to write YAML or JSON.
 In next usage examples used 'root' generated in [Example 2](#example-2).
