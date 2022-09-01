@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EDTList implements EDTItem {
-    private final String tag;
+    private String tag;
     private final List<Object> objects;
 
     EDTList(String tag) {
@@ -35,6 +35,11 @@ public class EDTList implements EDTItem {
     @Override
     public int size() {
         return objects.size();
+    }
+
+    @Override
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public EDTGroup child(){

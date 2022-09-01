@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class EDTGroup implements EDTItem {
     private final Map<String, Object> objects;
-    private final String tag;
+    private String tag;
 
     EDTGroup(String tag) {
         this.tag = tag;
@@ -198,6 +198,11 @@ public class EDTGroup implements EDTItem {
     @Override
     public int size() {
         return objects.size();
+    }
+
+    @Override
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public static EDTGroup create(String tag){
