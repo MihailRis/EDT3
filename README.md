@@ -8,6 +8,7 @@ Designed to be simple, universal and fast.
 ## Table of contents
 - [EDT base principles](#edt-base-principles)
 - [Format properties](#format-properties)
+- [Limitations](#limitations)
 - [Version 2](#version-2)
 - [Supported types](#supported-types)
 - [Usage](#usage)
@@ -25,10 +26,9 @@ Designed to be simple, universal and fast.
 - has no header and does not need any context to read
 - only types are tree nodes: group and list
 - any tree node may be root (but group is more preferred as root)
-- every subnode if it is group or list may be extracted from bytes the simplest way
 - string tags used to make reading implementation-independent and full
+- serialized tree node is still context independed for reading (unless it's in compressed tree bytes)
 - compression is highly recommended for files
-- GZIP used for compression (EDT.write uses compression by default, use EDT.write(item, false) to write uncompressed)
 
 ## Format Properties
 - byteorder: big-endian
@@ -36,6 +36,9 @@ Designed to be simple, universal and fast.
 - integers: signed
 - booleans: 1 byte
 - encoding: utf-8
+
+## Limitations
+- max tag length: 255 bytes (intentional limitation)
 
 ## Version 2
 Version 2 is deprecated since version 3.
@@ -155,6 +158,20 @@ public interface EDTWriteable {
 ```
 
 And `EDTSerializable` that just combines interfaces above.
+
+Also you can put any EDT tree into another as bytes to store compressed sub-trees in memory:
+```java
+EDTGroup internalRoot = ...;
+EDTGroup externalRoot = ...;
+
+byte[] internalBytes = EDT.write(internalRoot);
+externalRoot.put("internal", internalBytes);
+```
+And easily read it:
+```java
+EDTGroup internalRoot = EDT.read(externalRoot.getBytes("internal"))
+```
+It may be also used to prevent tree from reading all sub-trees at once.
 
 EDTConvert class allows to write string representation of tree.
 Also to write YAML or JSON.
